@@ -43,9 +43,27 @@ public class TicTacToe {
         }
     }
 
+
+    public void printBoard(){
+        System.out.println("##########################");
+        for(int i=1;i<board.length;i+=3){
+            for(int j=i;j<=i+2;j++){
+                if(j<i+2)System.out.print(board[j]+" | ");
+                else System.out.print(board[i+2]);
+            }
+            if((i+2)!=board.length-1){
+                System.out.print("\n--+---+--");
+                System.out.println();
+            }
+        }
+        System.out.println("\n##########################");
+    }
+
+
     public static void main(String[] args) {
         System.out.println("Welcome to TicTcToe Game");
         TicTacToe ticTacToeObj = new TicTacToe();
         ticTacToeObj.createGameBoard().playerChoice();
+        ticTacToeObj.printBoard();
     }
 }
