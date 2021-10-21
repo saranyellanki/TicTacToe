@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class TicTacToe {
     public char[] board;
     public String player, bot;
+    public boolean isWinner;
     public Scanner sc;
     /*
         constructor for TicTacToe which initializes
@@ -14,6 +15,7 @@ public class TicTacToe {
     public TicTacToe() {
         this.board = new char[10];
         this.sc = new Scanner(System.in);
+        this.isWinner = false;
     }
 
     public TicTacToe createGameBoard() {
@@ -30,7 +32,7 @@ public class TicTacToe {
         Computer will be assigned with the other option
      */
 
-    public void playerChoice() {
+    public TicTacToe playerChoice() {
         while(true){
             System.out.print("Choose a letter X or O : ");
             String option = sc.next();
@@ -41,6 +43,7 @@ public class TicTacToe {
                 break;
             }
         }
+        return this;
     }
 
 
@@ -59,11 +62,56 @@ public class TicTacToe {
         System.out.println("\n##########################");
     }
 
+    /*
+        Check whether the input given by player
+        Should not exceed length of array
+     */
+    public boolean isPositionValid(int pos){
+        return (pos >= 1 && pos <= 9);
+    }
+
+    /*
+        The chosen position by player will check with empty char
+        returns boolean
+     */
+    public boolean isPositionFilled(int pos){
+        return board[pos]==' ';
+    }
+
+    /*
+        After position is chosen
+        Game board is updated with chosen option
+     */
+    public void updateBoard(int pos){
+        board[pos] = player.charAt(0);
+        printBoard();
+    }
+
+    /*
+        Every time player enters the position
+        Game Board will be updated
+        Input player chosen option into empty char
+     */
+    public void playGame(){
+        while(!isWinner){
+            System.out.println("Enter the position number");
+            int pos = sc.nextInt();
+            if(isPositionValid(pos)){
+                if(isPositionFilled(pos)) updateBoard(pos);
+                else System.out.println("Position is already acquired by opposition");
+            }
+            else System.out.println("Entered position is invalid please select numbers from 1 to 9");
+        }
+    }
+
 
     public static void main(String[] args) {
         System.out.println("Welcome to TicTcToe Game");
         TicTacToe ticTacToeObj = new TicTacToe();
-        ticTacToeObj.createGameBoard().playerChoice();
+        ticTacToeObj
+                .createGameBoard()
+                .playerChoice()
+                .playGame();
         ticTacToeObj.printBoard();
     }
 }
