@@ -88,12 +88,24 @@ public class TicTacToe {
     }
 
     /*
+        Checks every position in the game board
+        if game board is completely filled returns true
+     */
+    public boolean isBoardFilled(){
+        for(int i=1;i<board.length;i++){
+            if(board[i]==' ') return false;
+        }
+        return true;
+    }
+
+
+    /*
         Every time player enters the position
         Game Board will be updated
         Input player chosen option into empty char
      */
     public void playGame(){
-        while(!isWinner){
+        while(!isWinner && !isBoardFilled()){
             System.out.println("Enter the position number");
             int pos = sc.nextInt();
             if(isPositionValid(pos)){
