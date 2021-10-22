@@ -47,7 +47,7 @@ public class TicTacToe {
     }
 
 
-    public void printBoard(){
+    public TicTacToe printBoard(){
         System.out.println("##########################");
         for(int i=1;i<board.length;i+=3){
             for(int j=i;j<=i+2;j++){
@@ -60,6 +60,7 @@ public class TicTacToe {
             }
         }
         System.out.println("\n##########################");
+        return this;
     }
 
     /*
@@ -98,7 +99,6 @@ public class TicTacToe {
         return true;
     }
 
-
     /*
         Every time player enters the position
         Game Board will be updated
@@ -116,14 +116,27 @@ public class TicTacToe {
         }
     }
 
+    public TicTacToe toss(){
+        int tossCheck = (int)Math.floor(Math.random()*10)%2;
+        switch (tossCheck){
+            case 0:
+                System.out.println("Player won the toss");
+                break;
+            case 1:
+                System.out.println("Computer won the toss");
+                break;
+        }
+        return this;
+    }
 
     public static void main(String[] args) {
         System.out.println("Welcome to TicTcToe Game");
         TicTacToe ticTacToeObj = new TicTacToe();
         ticTacToeObj
                 .createGameBoard()
+                .printBoard()
                 .playerChoice()
+                .toss()
                 .playGame();
-        ticTacToeObj.printBoard();
     }
 }
