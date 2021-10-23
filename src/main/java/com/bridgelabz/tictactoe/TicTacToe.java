@@ -158,11 +158,11 @@ public class TicTacToe {
     public void botPlay(){
         Random r = new Random();
         int posOfBot = r.nextInt(9)+1;
-        if (isPositionValid(posOfBot)) {
-            if (!isPositionFilled(posOfBot)) {
-                updateBoard(posOfBot,"BOT");
-            } else botPlay();
+        if (!isPositionFilled(posOfBot)) {
+            System.out.println("Bots turn now");
+            updateBoard(posOfBot,"BOT");
         }
+        else botPlay();
     }
     /*
     playerGame is a method for a player to choose his desired position
@@ -175,10 +175,13 @@ public class TicTacToe {
         if (isPositionValid(pos)) {
             if (!isPositionFilled(pos)) updateBoard(pos,"PLAYER");
             else {
-                System.out.println("Position is already acquired by opposition");
+                System.out.println("Position is already acquired");
                 playerGame();
             }
-        } else System.out.println("Entered position is invalid please select numbers from 1 to 9");
+        } else {
+            System.out.println("Entered position is invalid please select numbers from 1 to 9");
+            playerGame();
+        }
     }
     /*
         Loop the playerGame method till one the condition is reached
