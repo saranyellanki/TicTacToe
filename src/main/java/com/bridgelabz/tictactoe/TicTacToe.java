@@ -13,6 +13,7 @@ public class TicTacToe {
     public int turn;
     public int logic1Counter;
     public int logic2Counter;
+    public int logic3Counter;
     /*
         constructor for TicTacToe which initializes
         character array board with length 10 as default
@@ -160,7 +161,7 @@ public class TicTacToe {
     }
     public void botPlay(){
         computerLogic();
-        if(logic1Counter==0 && logic2Counter==0) {
+        if(logic1Counter==0 && logic2Counter==0 && logic3Counter==0) {
             Random r = new Random();
             int posOfBot = r.nextInt(9) + 1;
             if (!isPositionFilled(posOfBot)) {
@@ -169,67 +170,69 @@ public class TicTacToe {
             } else botPlay();
         }
     }
-    public void computerLogic() {
-        logic1Counter = 0;
-        logic1(1, 2, 3);
-        if (logic1Counter == 0) {
+    public void computerLogic(){
+        logic1Counter=0;
+        if (logic1Counter==0) {
+            logic1(1, 2, 3);
+        }if (logic1Counter==0) {
             logic1(4, 5, 6);
-        }
-        if (logic1Counter == 0) {
+        }if (logic1Counter==0) {
             logic1(7, 8, 9);
-        }
-        if (logic1Counter == 0) {
+        }if (logic1Counter==0) {
             logic1(1, 4, 7);
-        }
-        if (logic1Counter == 0) {
+        }if (logic1Counter==0) {
             logic1(2, 5, 8);
-        }
-        if (logic1Counter == 0) {
+        }if (logic1Counter==0) {
             logic1(3, 6, 9);
-        }
-        if (logic1Counter == 0) {
+        }if (logic1Counter==0) {
             logic1(1, 5, 9);
-        }
-        if (logic1Counter == 0) {
+        }if (logic1Counter==0) {
             logic1(3, 5, 7);
         }
 
-        if (logic1Counter == 0) {
+        if (logic1Counter==0) {
             logic2Counter = 0;
-            logic2(1, 2, 3);
             if (logic2Counter == 0) {
+                logic2(1, 2, 3);
+            }if (logic2Counter == 0) {
                 logic2(4, 5, 6);
-            }
-            if (logic2Counter == 0) {
+            }if (logic2Counter == 0) {
                 logic2(7, 8, 9);
-            }
-            if (logic2Counter == 0) {
+            }if (logic2Counter == 0) {
                 logic2(1, 4, 7);
-            }
-            if (logic2Counter == 0) {
+            }if (logic2Counter == 0) {
                 logic2(2, 5, 8);
-            }
-            if (logic2Counter == 0) {
+            }if (logic2Counter == 0) {
                 logic2(3, 6, 9);
-            }
-            if (logic2Counter == 0) {
+            }if (logic2Counter == 0) {
                 logic2(1, 5, 9);
-            }
-            if (logic2Counter == 0) {
+            }if (logic2Counter == 0) {
                 logic2(3, 5, 7);
+            }
+        }
+        if (logic1Counter==0 && logic2Counter==0) {
+            logic3Counter = 0;
+            if (logic3Counter==0){
+                logic3(1);
+            }if (logic3Counter == 0) {
+                logic3(3);
+            }if (logic3Counter == 0) {
+                logic3(7);
+            }if (logic3Counter == 0) {
+                logic3(9);
             }
         }
     }
     public void logic1(int x,int y, int z){
         if (board[x]==bot || board[y]==bot || board[z]==bot){
             if (board[x]==board[y] && board[z]==' '){
-                board[z]=bot;
+                updateBoard(z,"BOT");
                 logic1Counter++;
             }else if (board[x]==board[z] && board[y]==' '){
-                board[y]=bot;
+                updateBoard(y,"BOT");
                 logic1Counter++;
             }else if (board[y]==board[z] && board[x]==' '){
-                board[x]=bot;
+                updateBoard(x,"BOT");
                 logic1Counter++;
             }
         }
@@ -237,15 +240,22 @@ public class TicTacToe {
     public void logic2(int x,int y, int z){
         if (board[x]==player || board[y]==player || board[z]==player){
             if (board[x]==board[y] && board[z]==' '){
-                board[z]=player;
+                updateBoard(z,"BOT");
                 logic2Counter++;
             }else if (board[x]==board[z] && board[y]==' '){
-                board[y]=player;
+                updateBoard(y,"BOT");
                 logic2Counter++;
             }else if (board[y]==board[z] && board[x]==' '){
-                board[x]=player;
+                updateBoard(x,"BOT");
                 logic2Counter++;
             }
+        }
+    }
+    public void logic3(int x){
+        if (board[x]==' '){
+            board[x]=bot;
+            updateBoard(x,"BOT");
+            logic3Counter++;
         }
     }
     /*
