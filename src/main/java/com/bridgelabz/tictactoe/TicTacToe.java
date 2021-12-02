@@ -309,11 +309,21 @@ public class TicTacToe {
     public static void main(String[] args) {
         System.out.println("Welcome to TicTcToe Game");
         TicTacToe ticTacToeObj = new TicTacToe();
-        ticTacToeObj
-                .createGameBoard()
-                .printBoard()
-                .playerChoice()
-                .toss()
-                .playGame();
+        Scanner sc = new Scanner(System.in);
+        boolean isExit = true;
+        do{
+            System.out.println("Enter \n1.Play \n2.Exit");
+            int option = sc.nextInt();
+            switch (option) {
+                case 1 ->
+                    ticTacToeObj
+                            .createGameBoard()
+                            .printBoard()
+                            .playerChoice()
+                            .toss()
+                            .playGame();
+                case 2 -> isExit=false;
+            }
+        }while (isExit);
     }
 }
