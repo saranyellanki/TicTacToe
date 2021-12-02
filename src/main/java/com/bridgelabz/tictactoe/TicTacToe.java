@@ -221,6 +221,18 @@ public class TicTacToe {
             }if (logic3Counter == 0) {
                 logic3(9);
             }
+            // for computer choosing centre and then sides slot if corners are not available UC10
+            if (logic3Counter==0) {
+                logic3(5);
+            }if (logic3Counter==0) {
+                logic3(2);
+            }if (logic3Counter==0) {
+                logic3(4);
+            }if (logic3Counter==0) {
+                logic3(6);
+            }if (logic3Counter==0) {
+                logic3(8);
+            }
         }
     }
     public void logic1(int x,int y, int z){
