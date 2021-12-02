@@ -1,15 +1,18 @@
 package com.bridgelabz.tictactoe;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
     public char[] board;
-    public String player, bot = "";
+    public char player, bot;
     public boolean isWinner;
     public Scanner sc;
     public int turn;
+    public int logic1Counter;
+    public int logic2Counter;
     /*
         constructor for TicTacToe which initializes
         character array board with length 10 as default
@@ -34,11 +37,11 @@ public class TicTacToe {
     public TicTacToe playerChoice() {
         while(true){
             System.out.print("Choose a letter X or O : ");
-            String option = sc.next();
-            if(option.equals("X") || option.equals("O")){
+            char option = sc.next().toUpperCase(Locale.ROOT).charAt(0);
+            if(option=='X' || option=='O'){
                 System.out.println("You have chosen: "+option);
                 this.player = option;
-                this.bot = (player.equals("X")) ? "O" : "X";
+                this.bot = (player=='X') ? 'O' : 'X';
                 break;
             }
         }
@@ -81,8 +84,8 @@ public class TicTacToe {
         Game board is updated with chosen option
      */
     public void updateBoard(int pos, String playerToMove){
-        if(playerToMove.equals("PLAYER")) board[pos] = player.charAt(0);
-        else board[pos] = bot.charAt(0);
+        if(playerToMove.equals("PLAYER")) board[pos] = player;
+        else board[pos] = bot;
         printBoard();
         checkWinner();
     }
@@ -104,7 +107,7 @@ public class TicTacToe {
         int tossCheck = r.nextInt(2);
         switch (tossCheck) {
             case 0 -> {
-                if(player.equals("X") || player.equals("O")) {
+                if(player=='X' || player=='O') {
                     System.out.println("You won the toss");
                     turn = 0;
                 }
@@ -142,13 +145,13 @@ public class TicTacToe {
                 default -> null;
             };
             if(sequence.equals("XXX")) {
-                if (player.equals("X")) System.out.println("You won the game");
+                if (player=='X') System.out.println("You won the game");
                 else System.out.println("Computer won the game");
                 isWinner = true;
                 break;
             }
             else if(sequence.equals("OOO")) {
-                if (player.equals("O")) System.out.println("You won the game");
+                if (player=='O') System.out.println("You won the game");
                 else System.out.println("Computer won the game");
                 isWinner=true;
                 break;
@@ -156,13 +159,94 @@ public class TicTacToe {
         }
     }
     public void botPlay(){
-        Random r = new Random();
-        int posOfBot = r.nextInt(9)+1;
-        if (!isPositionFilled(posOfBot)) {
-            System.out.println("Bots turn now");
-            updateBoard(posOfBot,"BOT");
+        computerLogic();
+        if(logic1Counter==0 && logic2Counter==0) {
+            Random r = new Random();
+            int posOfBot = r.nextInt(9) + 1;
+            if (!isPositionFilled(posOfBot)) {
+                System.out.println("Bots turn now");
+                updateBoard(posOfBot, "BOT");
+            } else botPlay();
         }
-        else botPlay();
+    }
+    public void computerLogic() {
+        logic1Counter = 0;
+        logic1(1, 2, 3);
+        if (logic1Counter == 0) {
+            logic1(4, 5, 6);
+        }
+        if (logic1Counter == 0) {
+            logic1(7, 8, 9);
+        }
+        if (logic1Counter == 0) {
+            logic1(1, 4, 7);
+        }
+        if (logic1Counter == 0) {
+            logic1(2, 5, 8);
+        }
+        if (logic1Counter == 0) {
+            logic1(3, 6, 9);
+        }
+        if (logic1Counter == 0) {
+            logic1(1, 5, 9);
+        }
+        if (logic1Counter == 0) {
+            logic1(3, 5, 7);
+        }
+
+        if (logic1Counter == 0) {
+            logic2Counter = 0;
+            logic2(1, 2, 3);
+            if (logic2Counter == 0) {
+                logic2(4, 5, 6);
+            }
+            if (logic2Counter == 0) {
+                logic2(7, 8, 9);
+            }
+            if (logic2Counter == 0) {
+                logic2(1, 4, 7);
+            }
+            if (logic2Counter == 0) {
+                logic2(2, 5, 8);
+            }
+            if (logic2Counter == 0) {
+                logic2(3, 6, 9);
+            }
+            if (logic2Counter == 0) {
+                logic2(1, 5, 9);
+            }
+            if (logic2Counter == 0) {
+                logic2(3, 5, 7);
+            }
+        }
+    }
+    public void logic1(int x,int y, int z){
+        if (board[x]==bot || board[y]==bot || board[z]==bot){
+            if (board[x]==board[y] && board[z]==' '){
+                board[z]=bot;
+                logic1Counter++;
+            }else if (board[x]==board[z] && board[y]==' '){
+                board[y]=bot;
+                logic1Counter++;
+            }else if (board[y]==board[z] && board[x]==' '){
+                board[x]=bot;
+                logic1Counter++;
+            }
+        }
+    }
+    public void logic2(int x,int y, int z){
+        if (board[x]==player || board[y]==player || board[z]==player){
+            if (board[x]==board[y] && board[z]==' '){
+                board[z]=player;
+                logic2Counter++;
+            }else if (board[x]==board[z] && board[y]==' '){
+                board[y]=player;
+                logic2Counter++;
+            }else if (board[y]==board[z] && board[x]==' '){
+                board[x]=player;
+                logic2Counter++;
+            }
+        }
     }
     /*
     playerGame is a method for a player to choose his desired position
